@@ -1,0 +1,8 @@
+daftar /dev/serial/by-path/
+---------------------------
+#040322
+(IMU)                           : pci-0000:00:14.0-usb-0:4:1.0-port0
+(LiDAR Data)                    : pci-0000:00:14.0-usb-0:3:1.0-port0
+(frontGNSS)                     : pci-0000:00:14.0-usb-0:7.1:1.2
+(rearGNSS)                      : pci-0000:00:14.0-usb-0:7.4:1.2
+(ultrasonic)                    : pci-0000:00:14.0-usb-0:8:1.0-port0
