@@ -1,0 +1,51 @@
+#### PLC connection stuff
+ip: "192.168.1.10"
+port: 4545
+
+#### CTT Voltage Reference
+Reference_Voltage: 20
+
+#### Controller rate ####
+freq: 20. # (Hz)
+
+# k_rho, k_alpha, kv_alpha, ks, kv, sat_lat, sat_long,\
+#                  waypoints, stop_limit, PSback_X, PSback_Y, PSback_yaw, length,\
+#                  dock_X, dock_Y, dock_yaw
+
+# Point Stabilization Control
+k_rho: 0.1
+k_alpha: 0.05
+kv_alpha: 50
+PSback_X: 558091.856 #558092.34 #558088.34 # 
+PSback_Y: 9157947.658 #9157962.32 #9157952.32
+PSback_yaw: 1.57596 #1.585676 # newe 1.585676 # 1.57596
+length: 14.02 #13.75
+
+# Docking control
+dock_X: 558091.936 #558092.34 #558088.34 # new 558091.941
+dock_Y: 9157929.268 #9157928.938 #9157952.32 #9157941.199000001
+dock_yaw: 1.57596 #1.585676
+
+# Undockind control
+undock_X: 558091.856 #558092.34 #558088.34
+undock_Y: 9157947.658 #9157928.938 #9157952.32 #9157941.199000001
+undock_yaw: 1.57596 #1.585676 #1.585676
+
+# Stanley Control
+ks: 5
+kv: 1
+
+# signal saturation value
+sat_lat_max: 0.785 #rad
+sat_lat_min: -0.785 #rad
+sat_long_max: 1.5 #m/s
+
+# Stop_limit, distance to last waypoints
+stop_limit: 3
+
+# watpoints_path
+waypoints_path: 'sigmoid220722.npy'
+
+# Rosbag script bash
+record_script: 'rosbag_record.sh'
+record_folder: 'rosbag/'
