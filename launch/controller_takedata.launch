@@ -1,0 +1,30 @@
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+
+
+  <!-- call the data_converter package -->
+  <node pkg="agv_ctt" type="data_conv_est.py" name="data_converter" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+ 
+  <!-- call the dbw pubsub -->
+  <node pkg="agv_ctt" type="dbw_pubsub_new.py" name="DBW_subscriber_Publisher" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+
+  <!-- HMI Display -->
+  <!-- <node pkg="agv_ctt" type="hmi_final_v3.py" name="HMI_Display" output="screen">
+  </node> -->
+
+  <node pkg="agv_ctt" type="control_algorithm_node_new.py" name="control_algorithm" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+
+  <!-- call the data collector package -->
+  <node pkg="agv_ctt" type="data_collector.py" name="data_collector" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  
+  
+</launch>

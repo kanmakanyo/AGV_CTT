@@ -1,0 +1,11 @@
+<launch>
+  <!-- configuration file -->
+  <!-- <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/> -->
+  <!-- call the subscriber package -->
+  <!-- <node pkg="agv_ctt" type="dbw_pubsub.py" name="DBW_subscriber_Publisher" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  <node pkg="agv_ctt" type="marvelmindtoodom.py" name="odometry_publisher" output="screen">
+    <!-- <rosparam file="$(arg control_config_file)" command="load"/> -->
+  </node>
+</launch>

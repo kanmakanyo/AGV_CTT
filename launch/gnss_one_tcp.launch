@@ -1,0 +1,16 @@
+<launch>
+
+  <node name="nmea_tcp_driver_front" pkg="reach_ros_node" type="nmea_tcp_driver" output="screen">
+    <param name="host" value="192.168.1.100"/>
+    <param name="port" value="9001" />
+    <!-- <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="115200" />
+    <param name="frame_id" value="gps" />
+    <param name="use_GNSS_time" value="False" />
+    <param name="time_ref_source" value="gps" />
+    <param name="useRMC" value="False" /> -->
+  </node>
+
+<node name="utm__front" pkg="gps_common" type="utm_odometry_node" />
+
+</launch>

@@ -1,0 +1,8 @@
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+  <!-- call the data_converter package -->
+  <node pkg="agv_ctt" type="visualizer_node.py" name="Visualization_Node" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+</launch>

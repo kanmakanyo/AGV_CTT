@@ -1,0 +1,5 @@
+<launch>
+  <!-- call the mqtt publisher package -->
+  <node pkg="agv_ctt" type="HLC_Publisher_new.py" name="mqtt_pub" output="screen">
+  </node>
+</launch>

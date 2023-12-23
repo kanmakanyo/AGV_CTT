@@ -1,0 +1,16 @@
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+  <!-- call the data_converter package -->
+  <node pkg="agv_ctt" type="hmi_final_v3.py" name="HMI_Display" output="screen">
+  <!-- <node pkg="agv_ctt" type="hmi_final_v2.py" name="HMI_Display" output="screen"> -->
+  <!-- <node pkg="agv_ctt" type="hmi_truck_final.py" name="HMI_Display" output="screen"> -->
+  <!-- <node pkg="agv_ctt" type="HMI_AGV.py" name="HMI_Display" output="screen"> -->
+  <!-- <node pkg="agv_ctt" type="hami_uji_ps2.py" name="HMI_Display" output="screen"> -->
+  <!-- <node pkg="agv_ctt" type="hmi_uji_ps.py" name="HMI_Display" output="screen"> -->
+    <!-- <rosparam file="$(arg control_config_file)" command="load"/> -->
+  </node>
+  <!-- <node pkg="agv_ctt" type="visualizer_node.py" name="Visualizer" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+</launch>

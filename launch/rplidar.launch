@@ -1,0 +1,13 @@
+<launch>
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+  <!-- <param name="serial_port"         type="string" value="/dev/ttyUSB0"/> -->
+  <param name="serial_port"         type="string" value="/dev/serial/by-path/pci-0000:00:14.0-usb-0:3:1.0-port0"/>
+  <!-- <param name="serial_baudrate"     type="int"    value="115200"/>A1/A2 -->
+  <param name="serial_baudrate"     type="int"    value="256000"/>
+  <param name="frame_id"            type="string" value="laser"/>
+  <param name="inverted"            type="bool"   value="false"/>
+  <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+  <node pkg="agv_ctt" type="lidar.py" name="lidar_converter" output="screen">
+  </node>
+</launch>

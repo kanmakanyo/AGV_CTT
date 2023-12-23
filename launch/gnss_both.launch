@@ -1,0 +1,41 @@
+<launch>
+<!-- Serial Version -->
+  <!-- <node name="nmea_serial_driver_node__front" pkg="nmea_navsat_driver" type="nmea_serial_driver" output="screen">
+    <param name="port" value="/dev/ttyACM0"/>
+    <param name="baud" value="115200" />
+    <param name="frame_id" value="gps" />
+    <param name="use_GNSS_time" value="False" />
+    <param name="time_ref_source" value="gps" />
+    <param name="useRMC" value="False" />
+  </node>
+
+<node name="utm__front" pkg="gps_common" type="utm_odometry_node" />
+
+
+<node name="nmea_serial_driver_node__rear" pkg="nmea_navsat_driver" type="nmea_serial_driver_rear" output="screen">
+    <param name="port" value="/dev/ttyACM1"/>
+    <param name="baud" value="115200" />
+    <param name="frame_id" value="gps" />
+    <param name="use_GNSS_time" value="False" />
+    <param name="time_ref_source" value="gps" />
+    <param name="useRMC" value="False" />
+  </node>
+
+<node name="utm__rear" pkg="gps_common" type="utm_odometry_node_rear" /> -->
+<!-- TCP Version -->
+<node name="nmea_tcp_driver_front" pkg="reach_ros_node" type="nmea_tcp_driver" output="screen">
+    <param name="host" value="192.168.1.102"/>
+    <param name="port" value="9001" />
+  </node>
+
+<node name="utm__front" pkg="gps_common" type="utm_odometry_node" />
+
+<node name="nmea_tcp_driver_rear" pkg="reach_ros_node" type="nmea_tcp_driver_rear" output="screen">
+    <param name="host" value="192.168.1.103"/>
+    <param name="port" value="9002" />
+    <param name="useRMC" value="False" /> -->
+  </node>
+
+<node name="utm__rear" pkg="gps_common" type="utm_odometry_node_rear" />
+
+</launch>

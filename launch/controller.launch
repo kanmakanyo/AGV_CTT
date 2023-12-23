@@ -1,0 +1,61 @@
+
+
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+  
+  <!-- HMI Display -->
+  <node pkg="agv_ctt" type="hmi_final_v3.py" name="HMI_Display" output="screen">
+  </node>
+
+  <!-- call the data_converter package -->
+  <node pkg="agv_ctt" type="data_conv_est.py" name="data_converter" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- <node pkg="agv_ctt" type="data_conv.py" name="data_converter" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  <!-- call the subscriber package -->
+  <!-- <node pkg="agv_ctt" type="control_alg+orithm_node.py" name="control_algorithm" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  <node pkg="agv_ctt" type="control_algorithm_node_new.py" name="control_algorithm" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- call the data collector package -->
+  <node pkg="agv_ctt" type="data_collector.py" name="data_collector" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- call the mqtt publisher package -->
+  <!-- <node pkg="agv_ctt" type="HLC_Publisher_new.py" name="mqtt_pub" output="screen">
+  </node> -->
+  <!-- call the dbw pubsub -->
+  <node pkg="agv_ctt" type="dbw_pubsub_new.py" name="DBW_subscriber_Publisher" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  
+  <!-- <node pkg="agv_ctt" type="state_position.py" name="state_position" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  
+  <!-- call the rosbag package -->
+  <!--node pkg="agv_ctt" type="rosbag_recorder.py" name="rosbag_record" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>-->
+
+  <!--node name="nmea_tcp_driver_front" pkg="reach_ros_node" type="nmea_tcp_driver" output="screen">
+      <param name="host" value="192.168.1.105"/>
+      <param name="port" value="9001" />
+    </node>-->
+
+  <node name="utm__front" pkg="gps_common" type="utm_odometry_node" />
+
+  <!--node name="nmea_tcp_driver_rear" pkg="reach_ros_node" type="nmea_tcp_driver_rear" output="screen">
+      <param name="host" value="192.168.1.102"/>
+      <param name="port" value="9002" />
+      <param name="useRMC" value="False" />
+  </node>-->
+
+  <node name="utm__rear" pkg="gps_common" type="utm_odometry_node_rear" />
+
+</launch>

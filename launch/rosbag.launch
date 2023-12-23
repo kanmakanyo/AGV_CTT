@@ -1,0 +1,8 @@
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+  <!-- call the rosbag package -->
+  <node pkg="agv_ctt" type="rosbag_recorder.py" name="rosbag_record" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+</launch>

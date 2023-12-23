@@ -1,0 +1,100 @@
+<launch>
+  <!-- configuration file -->
+  <arg name="control_config_file" default="$(find agv_ctt)/config/params.yaml"/>
+  
+  <!-- HMI Display -->
+  <node pkg="agv_ctt" type="hmi_final_v3.py" name="HMI_Display" output="screen">
+  </node>
+
+  <!-- call the data_converter package -->
+  <node pkg="agv_ctt" type="data_conv.py" name="data_converter" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- <node pkg="agv_ctt" type="data_conv.py" name="data_converter" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  <!-- call the subscriber package -->
+  <!-- <node pkg="agv_ctt" type="control_algorithm_node.py" name="control_algorithm" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  <node pkg="agv_ctt" type="control_algorithm_node_new.py" name="control_algorithm" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- call the data collector package -->
+  <node pkg="agv_ctt" type="data_collector.py" name="data_collector" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  <!-- call the mqtt publisher package -->
+  <!-- <node pkg="agv_ctt" type="HLC_Publisher_new.py" name="mqtt_pub" output="screen">
+  </node> -->
+  <!-- call the dbw pubsub -->
+  <node pkg="agv_ctt" type="dbw_pubsub_new.py" name="DBW_subscriber_Publisher" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+  
+  <!-- <node pkg="agv_ctt" type="state_position.py" name="state_position" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node> -->
+  
+  <!-- call the rosbag package -->
+  <node pkg="agv_ctt" type="rosbag_recorder.py" name="rosbag_record" output="screen">
+    <rosparam file="$(arg control_config_file)" command="load"/>
+  </node>
+
+  <!-- <arg name="serial_port" default="/dev/ttyUSB2" /> -->
+  <arg name="serial_port" default="/dev/serial/by-path/pci-0000:00:14.0-usb-0:4:1.0-port0" />
+  <arg name="frame_id" default="imu_link" />
+  <arg name="operation_mode" default="IMU"/>
+  <arg name="oscillator" default="INTERNAL" />
+  <arg name="reset_orientation" default="true" />
+  <arg name="frequency" default="50" /> 
+  <arg name="use_magnetometer" default="false" />
+  <arg name="use_temperature" default="false" /> 
+
+  <node pkg="ros_imu_bno055" type="imu_ros.py" name="ros_imu_bno055_node" output="screen">
+      <param name="serial_port" value="$(arg serial_port)" />
+      <param name="frame_id" value="$(arg frame_id)" />
+      <param name="operation_mode" value="$(arg operation_mode)" />
+      <param name="oscillator" value="$(arg oscillator)" />
+      <param name="reset_orientation" value = "$(arg reset_orientation)" />
+      <param name="frequency" value="$(arg frequency)" />
+      <param name="use_magnetometer" value="$(arg use_magnetometer)" />    
+      <param name="use_temperature" value="$(arg use_temperature)" />    
+  </node>
+
+  <!-- TCP Version -->
+  <node name="nmea_tcp_driver_front" pkg="reach_ros_node" type="nmea_tcp_driver" output="screen">
+      <param name="host" value="192.168.1.102"/>
+      <param name="port" value="9001" />
+    </node>
+
+  <node name="utm__front" pkg="gps_common" type="utm_odometry_node" />
+
+  <node name="nmea_tcp_driver_rear" pkg="reach_ros_node" type="nmea_tcp_driver_rear" output="screen">
+      <param name="host" value="192.168.1.103"/>
+      <param name="port" value="9002" />
+      <param name="useRMC" value="False" />
+  </node>
+
+  <node name="utm__rear" pkg="gps_common" type="utm_odometry_node_rear" />
+
+<!-- call the lidar -->
+  <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+      <!-- <param name="serial_port"         type="string" value="/dev/ttyUSB0"/> -->
+      <param name="serial_port"         type="string" value="/dev/serial/by-path/pci-0000:00:14.0-usb-0:3:1.0-port0"/>
+      <!-- <param name="serial_baudrate"     type="int"    value="115200"/>A1/A2 -->
+      <param name="serial_baudrate"     type="int"    value="256000"/>
+      <param name="frame_id"            type="string" value="laser"/>
+      <param name="inverted"            type="bool"   value="false"/>
+      <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+  <node pkg="agv_ctt" type="lidar.py" name="lidar_converter" output="screen">
+  </node>
+
+  <!-- call the ultrasonic -->
+  <node name="serial_node_ultrasonic" pkg="rosserial_python" type="serial_node.py" output="screen">
+    <!-- <param name="port" type="string" value="/dev/ttyUSB1"/> -->
+    <param name="port" type="string" value="/dev/serial/by-path/pci-0000:00:14.0-usb-0:8:1.0-port0"/>
+    <param name="baud" type="int" value="500000"/>
+  </node>
+</launch>
