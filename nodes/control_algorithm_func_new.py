@@ -499,20 +499,20 @@ class Controller(object):
             else: 
                 yaw_docking = self.yaw_dock
         
-        self.errx_ = np.sqrt((x-self.dock_point_stab_x)**2)
+        #self.errx_ = np.sqrt((x-self.dock_point_stab_x)**2)
         # self.errx_ = np.sqrt((x-self.dock_point_stab_x)**2)
         self.erry_ = np.sqrt((y-point_stab_y)**2)
         self.erryaw_ = yaw - yaw_docking#self.yaw_dock
-        self.vi_ = np.arctan2(-(y-point_stab_y),-(x-self.dock_point_stab_x))-(yaw_docking-np.pi)+10**(-32)
-        self.alpha_ = np.arctan2(-(y-point_stab_y),-(x-self.dock_point_stab_x))-(yaw-np.pi)+10**(-32)
+        #self.vi_ = np.arctan2(-(y-point_stab_y),-(x-self.dock_point_stab_x))-(yaw_docking-np.pi)+10**(-32)
+        #self.alpha_ = np.arctan2(-(y-point_stab_y),-(x-self.dock_point_stab_x))-(yaw-np.pi)+10**(-32)
         # linear v
         v_ps = (self._k_rho * self.rho_ * np.cos(self.alpha_))
-        self.omega = (self._k_alpha * self.alpha_ + self._kv_alpha * self._k_rho * (self.vi_ + self.alpha_)\
+        #self.omega = (self._k_alpha * self.alpha_ + self._kv_alpha * self._k_rho * (self.vi_ + self.alpha_)\
              * np.cos(self.alpha_) * (np.sin(self.alpha_)/self.alpha_))
-        self.omega = self.k_omega * self.omega
-        cs_lat = -np.arctan((self._length/v_ps)*(self.omega))
+        #self.omega = self.k_omega * self.omega
+        #cs_lat = -np.arctan((self._length/v_ps)*(self.omega))
         # cs_lat = min(max(cs_lat, self._sat_lat_min),self._sat_lat_max)
-        cs_lat = min(max(cs_lat, np.radians(-10)),np.radians(10))
+        #cs_lat = min(max(cs_lat, np.radians(-10)),np.radians(10))
 
         # cs_long = min(v_ps, self._sat_long_max)
         # v_ps = 1 #slow speed only
