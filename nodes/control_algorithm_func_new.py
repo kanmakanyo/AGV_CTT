@@ -508,7 +508,7 @@ class Controller(object):
         # linear v
         v_ps = (self._k_rho * self.rho_ * np.cos(self.alpha_))
         #self.omega = (self._k_alpha * self.alpha_ + self._kv_alpha * self._k_rho * (self.vi_ + self.alpha_)\
-             * np.cos(self.alpha_) * (np.sin(self.alpha_)/self.alpha_))
+             #* np.cos(self.alpha_) * (np.sin(self.alpha_)/self.alpha_))
         #self.omega = self.k_omega * self.omega
         #cs_lat = -np.arctan((self._length/v_ps)*(self.omega))
         # cs_lat = min(max(cs_lat, self._sat_lat_min),self._sat_lat_max)
